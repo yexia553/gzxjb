@@ -1,0 +1,282 @@
+<!--index.wxml-->
+<van-toast id="van-toast" />
+<view class="container">
+  <view class="header fadeIn">
+    <view class="title">这破班上的值不值 ?</view>
+  </view>
+
+  <view class="card fadeIn">
+    <view class="card-body">
+      <!-- 薪资与工作时间 section -->
+      <view class="section">
+        <view class="section-title">基本信息</view>
+        
+        <van-cell-group>
+          <!-- 年薪输入 -->
+          <van-field
+            value="{{ annualSalary }}"
+            label="年薪（元）"
+            type="number"
+            placeholder="请输入年薪"
+            bind:change="onAnnualSalaryChange"
+            left-icon="balance-o"
+            required
+          />
+          
+          <!-- 工作天数输入 -->
+          <van-field
+            value="{{ workingDays }}"
+            label="每周工作天数"
+            type="digit"
+            placeholder="请输入工作天数"
+            bind:change="onWorkingDaysChange"
+            left-icon="calendar-o"
+            required
+          />
+          
+          <!-- 日工作时长输入 -->
+          <van-field
+            value="{{ dailyHours }}"
+            label="日工作时长/h"
+            type="digit"
+            placeholder="请输入每天工作小时数"
+            bind:change="onDailyHoursChange"
+            left-icon="clock-o"
+            required
+          />
+          
+          <!-- 通勤时长输入 -->
+          <van-field
+            value="{{ commuteTime }}"
+            label="通勤时长/h"
+            type="digit"
+            placeholder="每天往返通勤小时数"
+            bind:change="onCommuteTimeChange"
+            left-icon="location-o"
+            required
+            custom-class="tooltip-field"
+          >
+            <van-icon 
+              slot="right-icon" 
+              name="info-o" 
+              custom-class="tooltip-icon" 
+              bind:tap="showTooltip" 
+              data-tooltip="包括上班路上的往返通勤总时间"
+            />
+          </van-field>
+          
+          <!-- 年假天数输入 -->
+          <van-field
+            value="{{ annualLeave }}"
+            label="年假天数"
+            type="digit"
+            placeholder="请输入年假天数"
+            bind:change="onAnnualLeaveChange"
+            left-icon="award-o"
+            required
+          />
+          
+          <!-- 法定节假日输入 -->
+          <van-field
+            value="{{ publicHolidays }}"
+            label="法定节假日天数"
+            type="digit"
+            placeholder="请输入法定节假日天数"
+            bind:change="onPublicHolidaysChange"
+            left-icon="flag-o"
+            required
+          />
+        </van-cell-group>
+      </view>
+
+      <view class="divider"></view>
+
+      <!-- 环境系数 -->
+      <view class="section">
+        <view class="section-title">工作环境</view>
+        <view class="btn-group">
+          <view class="option-btn {{workEnvironment === 0.8 ? 'active' : ''}}" 
+                bindtap="selectWorkEnvironment" data-value="0.8">
+            偏远地区制造业工厂/建筑工地
+          </view>
+          <view class="option-btn {{workEnvironment === 0.9 ? 'active' : ''}}" 
+                bindtap="selectWorkEnvironment" data-value="0.9">
+            郊区工厂/物流仓库/户外作业
+          </view>
+          <view class="option-btn {{workEnvironment === 1.0 ? 'active' : ''}}" 
+                bindtap="selectWorkEnvironment" data-value="1.0">
+            普通市区写字楼/科技园区
+          </view>
+          <view class="option-btn {{workEnvironment === 1.1 ? 'active' : ''}}" 
+                bindtap="selectWorkEnvironment" data-value="1.1">
+            金融CBD/国企事业单位/外企
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title">异性环境</view>
+        <view class="btn-group">
+          <view class="option-btn {{heterogeneity === 0.85 ? 'active' : ''}}" 
+                bindtap="selectHeterogeneity" data-value="0.85">
+            没有好看的
+          </view>
+          <view class="option-btn {{heterogeneity === 1.0 ? 'active' : ''}}" 
+                bindtap="selectHeterogeneity" data-value="1.0">
+            好看的不多不少
+          </view>
+          <view class="option-btn {{heterogeneity === 1.15 ? 'active' : ''}}" 
+                bindtap="selectHeterogeneity" data-value="1.15">
+            很多好看的
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title">同事环境</view>
+        <view class="btn-group">
+          <view class="option-btn {{teamwork === 0.85 ? 'active' : ''}}" 
+                bindtap="selectTeamwork" data-value="0.85">
+            脑残同事较多
+          </view>
+          <view class="option-btn {{teamwork === 1.0 ? 'active' : ''}}" 
+                bindtap="selectTeamwork" data-value="1.0">
+            都是普通同事
+          </view>
+          <view class="option-btn {{teamwork === 1.15 ? 'active' : ''}}" 
+                bindtap="selectTeamwork" data-value="1.15">
+            优秀同事较多
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title">领导傻X系数</view>
+        <view class="btn-group leadership-group">
+          <view class="option-btn leadership-btn {{leadershipFactor === 0.8 ? 'active' : ''}}" 
+                bindtap="selectLeadershipFactor" data-value="0.8">
+            <text class="leadership-main">职场PUA大师</text>
+            <text class="leadership-sub">(增长CPU/KPI)</text>
+          </view>
+          <view class="option-btn leadership-btn {{leadershipFactor === 1.0 ? 'active' : ''}}" 
+                bindtap="selectLeadershipFactor" data-value="1.0">
+            <text class="leadership-main">普通人类</text>
+            <text class="leadership-sub">(偶尔说人话)</text>
+          </view>
+          <view class="option-btn leadership-btn {{leadershipFactor === 1.2 ? 'active' : ''}}" 
+                bindtap="selectLeadershipFactor" data-value="1.2">
+            <text class="leadership-main">神仙领导</text>
+            <text class="leadership-sub">(快买彩票)</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title">个人学历</view>
+        <view class="btn-group">
+          <view class="option-btn {{education === 0.8 ? 'active' : ''}}" 
+                bindtap="selectEducation" data-value="0.8">
+            专科及以下
+          </view>
+          <view class="option-btn {{education === 1.0 ? 'active' : ''}}" 
+                bindtap="selectEducation" data-value="1.0">
+            普通本科
+          </view>
+          <view class="option-btn {{education === 1.1 ? 'active' : ''}}" 
+                bindtap="selectEducation" data-value="1.1">
+            985/211/海龟本科
+          </view>
+          <view class="option-btn {{education === 1.2 ? 'active' : ''}}" 
+                bindtap="selectEducation" data-value="1.2">
+            普通硕士
+          </view>
+          <view class="option-btn {{education === 1.3 ? 'active' : ''}}" 
+                bindtap="selectEducation" data-value="1.3">
+            985/211/海龟硕士
+          </view>
+          <view class="option-btn {{education === 1.6 ? 'active' : ''}}" 
+                bindtap="selectEducation" data-value="1.6">
+            985/211/海龟博士
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title">公司前景</view>
+        <view class="btn-group">
+          <view class="option-btn {{companyProspect === 0.8 ? 'active' : ''}}" 
+                bindtap="selectCompanyProspect" data-value="0.8">
+            没希望
+          </view>
+          <view class="option-btn {{companyProspect === 1.0 ? 'active' : ''}}" 
+                bindtap="selectCompanyProspect" data-value="1.0">
+            一般
+          </view>
+          <view class="option-btn {{companyProspect === 1.15 ? 'active' : ''}}" 
+                bindtap="selectCompanyProspect" data-value="1.15">
+            有前途
+          </view>
+          <view class="option-btn {{companyProspect === 1.3 ? 'active' : ''}}" 
+                bindtap="selectCompanyProspect" data-value="1.3">
+            非常好
+          </view>
+        </view>
+      </view>
+      
+      <view class="section">
+        <view class="section-title">摸鱼程度</view>
+        <view class="btn-group">
+          <view class="option-btn {{fishLevel === 0.8 ? 'active' : ''}}" 
+                bindtap="selectFishLevel" data-value="0.8">
+            摸不了鱼
+          </view>
+          <view class="option-btn {{fishLevel === 1.0 ? 'active' : ''}}" 
+                bindtap="selectFishLevel" data-value="1.0">
+            偶尔能摸
+          </view>
+          <view class="option-btn {{fishLevel === 1.2 ? 'active' : ''}}" 
+                bindtap="selectFishLevel" data-value="1.2">
+            想摸就摸
+          </view>
+        </view>
+      </view>
+      
+      <view class="section">
+        <view class="section-title">五险一金</view>
+        <view class="btn-group">
+          <view class="option-btn {{insuranceFactor === 0.8 ? 'active' : ''}}" 
+                bindtap="selectInsuranceFactor" data-value="0.8">
+            裸奔模式（啥都没有）
+          </view>
+          <view class="option-btn {{insuranceFactor === 1.0 ? 'active' : ''}}" 
+                bindtap="selectInsuranceFactor" data-value="1.0">
+            标准套餐（勉强交点）
+          </view>
+          <view class="option-btn {{insuranceFactor === 1.2 ? 'active' : ''}}" 
+                bindtap="selectInsuranceFactor" data-value="1.2">
+            豪华全配（疯狂交钱）
+          </view>
+        </view>
+      </view>
+      
+      <view class="mt-40">
+        <button class="primary-btn" bindtap="calculate">计算性价比</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 提示弹窗 -->
+<van-popup
+  show="{{ showTip }}"
+  round
+  position="center"
+  custom-style="width: 70%; padding: 32rpx;"
+  bind:close="closeTip"
+>
+  <view class="popup-title">提示</view>
+  <view class="popup-content">{{ tipContent }}</view>
+  <view class="popup-footer">
+    <button class="popup-btn" bindtap="closeTip">我知道了</button>
+  </view>
+</van-popup>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>这破班上的值不值？</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Icons CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Inter font - similar to Linear design system -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* Custom styles */
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .fadeIn {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn {
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Tooltip styling */
+        .tooltip {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .tooltip .tooltip-icon {
+            margin-left: 5px;
+            cursor: help;
+            color: #6b7280;
+            font-size: 18px;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            line-height: 1.2rem;
+            font-weight: normal;
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Modern scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c5c5c5;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+        
+        /* Customize input focus */
+        input:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom input styling */
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+        
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        /* Responsive text sizing */
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.5rem !important;
+            }
+            .result-value {
+                font-size: 1.25rem !important;
+            }
+        }
+        
+        /* Touch-friendly targeting for mobile */
+        @media (max-width: 768px) {
+            button, input, .btn, .option-btn {
+                min-height: 44px;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f7ff',
+                            100: '#e0efff',
+                            200: '#baddff',
+                            300: '#84caff',
+                            400: '#3aaeff',
+                            500: '#0090ff',
+                            600: '#0077e6',
+                            700: '#005db3',
+                            800: '#004c91',
+                            900: '#003a6a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <div class="max-w-4xl mx-auto p-4 space-y-8 pb-24">
+        <div class="text-center space-y-2 fadeIn">
+            <h1 class="text-3xl font-bold text-gray-800">
+                这破班上的值不值 ?
+            </h1>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg border border-gray-100 card fadeIn">
+            <div class="p-6 space-y-8">
+                <!-- 薪资与工作时间 section -->
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">年薪（元）</label>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="material-icons text-gray-500">account_balance_wallet</span>
+                            <input
+                                type="number"
+                                id="annualSalary"
+                                placeholder="税前年薪"
+                                class="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">每周工作天数</label>
+                            <input
+                                type="number"
+                                id="workDaysPerWeek"
+                                min="1"
+                                max="7"
+                                value="5"
+                                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">年假天数</label>
+                            <input
+                                type="number"
+                                id="annualLeave"
+                                value="5"
+                                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">法定节假日</label>
+                            <input
+                                type="number"
+                                id="publicHolidays"
+                                value="11"
+                                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 tooltip">
+                                日工作时长/h
+                                <span class="material-icons tooltip-icon">info_outline</span>
+                                <span class="tooltip-text">指在工作场所的总时长（包含午休时间）。计算中会扣除一半的午休时间。</span>
+                            </label>
+                            <input
+                                type="number"
+                                id="workHours"
+                                min="1"
+                                max="24"
+                                value="10"
+                                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 tooltip">
+                                通勤时长/h
+                                <span class="material-icons tooltip-icon">info_outline</span>
+                                <span class="tooltip-text">往返工作地点的总时间</span>
+                            </label>
+                            <input
+                                type="number"
+                                id="commuteHours"
+                                value="2"
+                                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 tooltip">
+                                午休时长/h
+                                <span class="material-icons tooltip-icon">info_outline</span>
+                                <span class="tooltip-text">午休时长已包含在工作时长中，计算时将扣除一半的午休时间</span>
+                            </label>
+                            <input
+                                type="number"
+                                id="breakHours"
+                                value="2"
+                                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-200 my-6"></div>
+
+                <!-- 环境系数 -->
+                <div class="space-y-4">
+                    <!-- 工作环境 -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">工作环境</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-primary-100 text-primary-700 font-medium btn"
+                                data-name="workEnvironment"
+                                data-value="0.8"
+                            >
+                                偏远地区制造业工厂/建筑工地
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="workEnvironment"
+                                data-value="0.9"
+                            >
+                                郊区工厂/物流仓库/户外作业
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="workEnvironment"
+                                data-value="1.0"
+                            >
+                                普通市区写字楼/科技园区
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="workEnvironment"
+                                data-value="1.1"
+                            >
+                                金融CBD/国企事业单位/外企
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 异性环境 -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">异性环境</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-primary-100 text-primary-700 font-medium btn"
+                                data-name="heterogeneity"
+                                data-value="0.9"
+                            >
+                                没有好看的
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="heterogeneity"
+                                data-value="1.0"
+                            >
+                                好看的不多不少
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="heterogeneity"
+                                data-value="1.1"
+                            >
+                                很多好看的
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 同事环境 -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">同事环境</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-primary-100 text-primary-700 font-medium btn"
+                                data-name="teamwork"
+                                data-value="0.95"
+                            >
+                                脑残同事较多
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="teamwork"
+                                data-value="1.0"
+                            >
+                                都是普通同事
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="teamwork"
+                                data-value="1.05"
+                            >
+                                优秀同事较多
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 领导傻X系数 -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">领导傻X系数</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-primary-100 text-primary-700 font-medium btn"
+                                data-name="leadershipFactor"
+                                data-value="0.8"
+                            >
+                                职场PUA大师
+                                <span class="text-xs text-primary-400">(擅长CPU/KPI)</span>
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="leadershipFactor"
+                                data-value="1.0"
+                            >
+                                普通人类
+                                <span class="text-xs text-gray-500">(偶尔说人话)</span>
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="leadershipFactor"
+                                data-value="1.2"
+                            >
+                                神仙领导
+                                <span class="text-xs text-green-500">(快买彩票)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 个人学历 -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">个人学历</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-primary-100 text-primary-700 font-medium btn"
+                                data-name="education"
+                                data-value="0.8"
+                            >
+                                专科及以下
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="education"
+                                data-value="1.0"
+                            >
+                                普通本科
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="education"
+                                data-value="1.2"
+                            >
+                                985/211本科
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="education"
+                                data-value="1.4"
+                            >
+                                普/授课硕
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="education"
+                                data-value="1.6"
+                            >
+                                985/211研究硕
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="education"
+                                data-value="1.8"
+                            >
+                                普通博士
+                            </button>
+                            <button
+                                class="option-btn px-3 py-2 rounded-md text-sm transition-colors bg-gray-50 hover:bg-gray-100 btn"
+                                data-name="education"
+                                data-value="2.0"
+                            >
+                                985/211博士
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 结果卡片 -->
+        <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 shadow-inner card fadeIn">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8">
+                <div class="text-center p-4 bg-white rounded-lg shadow-sm card">
+                    <div class="text-2xl font-bold text-primary-600" id="workingDays">--天</div>
+                    <div class="text-sm text-gray-500 mt-1">年工作天数</div>
+                </div>
+                <div class="text-center p-4 bg-white rounded-lg shadow-sm card">
+                    <div class="text-2xl font-bold text-primary-600" id="dailySalary">¥--</div>
+                    <div class="text-sm text-gray-500 mt-1">平均日薪</div>
+                </div>
+                <div class="text-center p-4 bg-white rounded-lg shadow-sm card">
+                    <div class="text-2xl font-bold" id="valueResult">
+                        -- <span class="text-base ml-2">(请输入年薪)</span>
+                    </div>
+                    <div class="text-sm text-gray-500 mt-1">工作性价比</div>
+                </div>
+            </div>
+            
+            <!-- 趣味指标展示 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="text-center p-4 bg-white rounded-lg shadow-sm card">
+                    <div class="text-2xl font-bold text-primary-600" id="coffeeIndex">--</div>
+                    <div class="text-sm text-gray-500 mt-1">咖啡自由指数</div>
+                </div>
+                <div class="text-center p-4 bg-white rounded-lg shadow-sm card">
+                    <div class="text-2xl font-bold text-primary-600" id="nezhaTickets">--</div>
+                    <div class="text-sm text-gray-500 mt-1">哪吒2电影票指数</div>
+                </div>
+                <div class="text-center p-4 bg-white rounded-lg shadow-sm card">
+                    <div class="text-2xl font-bold text-primary-600" id="painIndex">--</div>
+                    <div class="text-sm text-gray-500 mt-1">工作痛苦指数</div>
+                </div>
+                <div class="text-center p-4 bg-white rounded-lg shadow-sm card">
+                    <div class="text-2xl font-bold text-primary-600" id="lifePercentage">--</div>
+                    <div class="text-sm text-gray-500 mt-1">生命时间占比</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="w-full py-4 border-t bg-gray-50 fixed bottom-0 left-0 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex flex-col items-center">
+                <a 
+                    href="https://panzhixiang.cn" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-gray-700 hover:text-primary-600 transition-colors flex items-center text-sm sm:text-base"
+                >
+                    <span class="material-icons mr-2" style="font-size: 1.1rem;">copyright</span>
+                    2025 PANZHIXIANG
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化表单数据
+            const formData = {
+                annualSalary: '',         // 年薪
+                workDaysPerWeek: 5,       // 每周工作天数
+                annualLeave: 5,           // 年假天数
+                publicHolidays: 11,       // 法定节假日
+                workHours: 10,            // 工作时长
+                commuteHours: 2,          // 通勤时长
+                breakHours: 2,            // 午休时长
+                workEnvironment: '0.8',   // 工作环境系数
+                heterogeneity: '0.9',     // 异性环境系数
+                teamwork: '0.95',         // 同事环境系数
+                leadershipFactor: '0.8',  // 领导傻X系数
+                education: '0.8'          // 学历系数
+            };
+
+            // 获取所有输入元素
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                // 初始化值
+                if (formData[input.id] !== undefined) {
+                    input.value = formData[input.id];
+                }
+                
+                // 添加事件监听器
+                input.addEventListener('input', function() {
+                    formData[this.id] = this.value;
+                    updateResults();
+                });
+            });
+
+            // 获取所有选项按钮
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const value = this.getAttribute('data-value');
+                    
+                    // 更新formData
+                    formData[name] = value;
+                    
+                    // 更新UI - 同一类型的选项切换选中状态
+                    document.querySelectorAll(`.option-btn[data-name="${name}"]`).forEach(btn => {
+                        btn.classList.remove('bg-primary-100', 'text-primary-700', 'font-medium');
+                        btn.classList.add('bg-gray-50', 'hover:bg-gray-100');
+                    });
+                    
+                    this.classList.remove('bg-gray-50', 'hover:bg-gray-100');
+                    this.classList.add('bg-primary-100', 'text-primary-700', 'font-medium');
+                    
+                    updateResults();
+                });
+            });
+
+            // 计算工作天数
+            function calculateWorkingDays() {
+                const weeksPerYear = 52;
+                const totalWorkDays = weeksPerYear * formData.workDaysPerWeek;
+                const totalLeaves = Number(formData.annualLeave) + Number(formData.publicHolidays);
+                return totalWorkDays - totalLeaves;
+            }
+
+            // 计算日薪
+            function calculateDailySalary() {
+                if (!formData.annualSalary) return 0;
+                const workingDays = calculateWorkingDays();
+                return Number(formData.annualSalary) / workingDays;
+            }
+
+            // 计算性价比
+            function calculateValue() {
+                if (!formData.annualSalary) return 0;
+                
+                const dailySalary = calculateDailySalary();
+                const workHours = Number(formData.workHours);
+                const commuteHours = Number(formData.commuteHours);
+                const breakHours = Number(formData.breakHours);
+                
+                const environmentFactor = Number(formData.workEnvironment) * 
+                                        Number(formData.heterogeneity) * 
+                                        Number(formData.teamwork) *
+                                        Number(formData.leadershipFactor);
+                
+                return (dailySalary * environmentFactor) / 
+                       (35 * (workHours + commuteHours - 0.5 * breakHours) * Number(formData.education));
+            }
+
+            // 获取评估结果
+            function getValueAssessment(value) {
+                if (!formData.annualSalary) return { text: "请输入年薪", color: "text-gray-500" };
+                if (value < 0.7) return { text: "血汗工厂", color: "text-red-600" };
+                if (value < 1.0) return { text: "苦海无边", color: "text-red-400" };
+                if (value < 2.0) return { text: "人间清醒", color: "text-yellow-500" };
+                if (value < 3.5) return { text: "躺平摸鱼", color: "text-green-500" };
+                return { text: "爽到爆炸", color: "text-purple-500" };
+            }
+
+            // 计算趣味指标
+            function calculateInterestingMetrics(dailySalary, value) {
+                // 咖啡指数：日薪相当于多少杯精品咖啡
+                const coffeeIndex = (dailySalary / 35).toFixed(1);
+                
+                // 哪吒2电影票指数：月薪相当于多少张电影票
+                const nezhaTickets = ((dailySalary * 21) / 60).toFixed(1);
+                
+                // 工作痛苦指数（反向指标）
+                const painIndex = Math.max(0, 10 - value * 2).toFixed(1);
+                
+                // 人生时光占比
+                const dailyWorkHours = Number(formData.workHours) + Number(formData.commuteHours);
+                const lifePercentage = ((dailyWorkHours / 24) * 100).toFixed(1);
+                
+                return {
+                    coffeeIndex,
+                    nezhaTickets,
+                    painIndex,
+                    lifePercentage
+                };
+            }
+
+            // 更新结果
+            function updateResults() {
+                const workingDaysEl = document.getElementById('workingDays');
+                const dailySalaryEl = document.getElementById('dailySalary');
+                const valueResultEl = document.getElementById('valueResult');
+                
+                const workingDays = calculateWorkingDays();
+                const dailySalary = calculateDailySalary();
+                const value = calculateValue();
+                const assessment = getValueAssessment(value);
+                const metrics = calculateInterestingMetrics(dailySalary, value);
+                
+                workingDaysEl.textContent = `${workingDays}天`;
+                dailySalaryEl.textContent = `¥${dailySalary.toFixed(2)}`;
+                
+                valueResultEl.className = `text-2xl font-bold ${assessment.color}`;
+                valueResultEl.innerHTML = `${value.toFixed(2)} <span class="text-base ml-2">(${assessment.text})</span>`;
+                
+                // 更新趣味指标
+                document.getElementById('coffeeIndex').innerHTML = 
+                    `${metrics.coffeeIndex}杯 <span class="text-sm text-gray-500">每日精品咖啡</span>`;
+                document.getElementById('nezhaTickets').innerHTML = 
+                    `${metrics.nezhaTickets}张 <span class="text-sm text-gray-500">月观影能力</span>`;
+                document.getElementById('painIndex').innerHTML = 
+                    `<span class="text-${value < 1 ? 'red' : 'green'}-500">${metrics.painIndex}</span>/10`;
+                document.getElementById('lifePercentage').innerHTML = 
+                    `${metrics.lifePercentage}% <span class="text-sm text-gray-500">每日生命投入</span>`;
+                
+                // 添加简单的淡入效果
+                [workingDaysEl, dailySalaryEl, valueResultEl].forEach(el => {
+                    el.style.animation = 'none';
+                    el.offsetHeight; // 触发重绘
+                    el.style.animation = 'fadeIn 0.3s ease-in-out';
+                });
+            }
+
+            // 初始化结果
+            updateResults();
+
+            // 给输入添加焦点和模糊事件
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('ring-2', 'ring-primary-200');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('ring-2', 'ring-primary-200');
+                });
+            });
+
+            // 添加滚动时的平滑过渡效果
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('h1');
+                if (window.scrollY > 50) {
+                    header.classList.add('text-2xl');
+                    header.classList.remove('text-3xl');
+                } else {
+                    header.classList.add('text-3xl');
+                    header.classList.remove('text-2xl');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

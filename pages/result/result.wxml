@@ -1,0 +1,105 @@
+<!--result.wxml-->
+<view class="container">
+  <view class="page-title fadeIn">
+    <text>这破班上的值不值？</text>
+  </view>
+  
+  <!-- 结果卡片 -->
+  <view class="result-card fadeIn">
+    <view class="result-header">
+      <view class="value-assessment" style="background-color: {{assessment.color}}">
+        {{assessment.text}}
+      </view>
+    </view>
+    
+    <view class="result-grid">
+      <view class="result-item">
+        <view class="result-label">性价比评分</view>
+        <view class="result-value">{{valueScore}}</view>
+      </view>
+      
+      <view class="result-item">
+        <view class="result-label">日薪（元）</view>
+        <view class="result-value">{{dailySalary}}</view>
+      </view>
+    </view>
+    
+    <view class="divider"></view>
+
+  </view>
+  
+  <!-- 趣味指标卡片 -->
+  <view class="card funMetrics-card">
+    <view class="card-title">快乐指数</view>
+    <view class="card-body">
+      <view class="funMetrics-grid">
+        <view class="funMetrics-item">
+          <view class="funMetrics-icon-container">
+            <image class="funMetrics-icon" src="/assets/milk_tea.svg" mode="aspectFit"></image>
+          </view>
+          <view class="funMetrics-value">{{milkTeaCount}}</view>
+          <view class="funMetrics-label">杯奶茶</view>
+        </view>
+        
+        <view class="funMetrics-item">
+          <view class="funMetrics-icon-container">
+            <image class="funMetrics-icon" src="/assets/movie.svg" mode="aspectFit"></image>
+          </view>
+          <view class="funMetrics-value">{{movieCount}}</view>
+          <view class="funMetrics-label">场《哪吒2》</view>
+        </view>
+        
+        <view class="funMetrics-item">
+          <view class="funMetrics-icon-container">
+            <image class="funMetrics-icon" src="/assets/meal.svg" mode="aspectFit"></image>
+          </view>
+          <view class="funMetrics-value">{{restaurantMealCount}}</view>
+          <view class="funMetrics-label">顿大餐</view>
+        </view> 
+      </view>
+      
+      <view class="funMetrics-desc compact-desc">
+        今日搬砖收益可兑换的物品
+      </view>
+    </view>
+  </view>
+  
+  <!-- 新的隐私保护区域放在这里 -->
+  <view class="privacy-compact-card fadeIn">
+    <view class="privacy-compact-header">
+      <text class="privacy-compact-title">隐私保护</text>
+      <text class="privacy-compact-subtitle">分享时隐藏敏感数据</text>
+    </view>
+    
+    <view class="privacy-compact-options">
+      <view class="privacy-compact-item">
+        <text>隐藏日薪</text>
+        <switch checked="{{!privacySettings.showSalary}}" bindchange="togglePrivacySetting" data-setting="showSalary" data-reverse="true" color="#4170ff" scale="0.8"/>
+      </view>
+      
+      <view class="privacy-compact-item">
+        <text>隐藏快乐指数</text>
+        <switch checked="{{!privacySettings.showFunMetrics}}" bindchange="togglePrivacySetting" data-setting="showFunMetrics" data-reverse="true" color="#4170ff" scale="0.8"/>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 底部按钮区域 -->
+  <view class="actions-container">
+    <button class="primary-btn" bindtap="backToCalculator">重新计算</button>
+    <button class="share-btn" open-type="share">
+      <text class="share-btn-text">分享结果</text>
+    </button>
+  </view>
+</view>
+
+<!-- 分享提示 -->
+<view class="share-tips fadeIn" wx:if="{{showShareTips}}">
+  <view class="share-tips-content">
+    <view class="share-tips-title">分享成功!</view>
+    <view class="share-tips-desc">你的朋友即将收到这个性价比分析</view>
+  </view>
+</view>
+
+<!-- 分享图绘制区域（隐藏） -->
+<canvas canvas-id="shareCanvas" style="width: 600rpx; height: 800rpx; position: fixed; left: -9999rpx; top: -9999rpx;"></canvas>
