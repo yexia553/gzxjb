@@ -173,7 +173,7 @@ Page({
     }
     
     // 解析输入值
-    const annualSalary = parseFloat(this.data.annualSalary);
+    const annualSalary = parseFloat(this.data.annualSalary) * 10000; // 转换万元为元
     const workingDays = parseFloat(this.data.workingDays);
     const dailyHours = parseFloat(this.data.dailyHours);
     const commuteTime = parseFloat(this.data.commuteTime);
@@ -223,7 +223,7 @@ Page({
     // 将结果存入全局数据
     const app = getApp();
     app.globalData.calculationResults = {
-      annualSalary: annualSalary,
+      annualSalary: parseFloat(this.data.annualSalary), // 存储万元单位的年薪
       workingDays: workingDays,
       dailyHours: dailyHours,
       commuteTime: commuteTime,

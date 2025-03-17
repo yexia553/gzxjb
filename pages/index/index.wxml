@@ -15,9 +15,9 @@
           <!-- 年薪输入 -->
           <van-field
             value="{{ annualSalary }}"
-            label="年薪（元）"
+            label="税前年薪（万元）"
             type="number"
-            placeholder="请输入年薪"
+            placeholder="请输入年薪（万元）"
             bind:change="onAnnualSalaryChange"
             left-icon="balance-o"
             required
