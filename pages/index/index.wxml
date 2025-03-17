@@ -48,7 +48,7 @@
           <!-- 通勤时长输入 -->
           <van-field
             value="{{ commuteTime }}"
-            label="通勤时长/h"
+            label="往返通勤时长/h"
             type="digit"
             placeholder="每天往返通勤小时数"
             bind:change="onCommuteTimeChange"
@@ -73,17 +73,6 @@
             placeholder="请输入年假天数"
             bind:change="onAnnualLeaveChange"
             left-icon="award-o"
-            required
-          />
-          
-          <!-- 法定节假日输入 -->
-          <van-field
-            value="{{ publicHolidays }}"
-            label="法定节假日天数"
-            type="digit"
-            placeholder="请输入法定节假日天数"
-            bind:change="onPublicHolidaysChange"
-            left-icon="flag-o"
             required
           />
         </van-cell-group>
@@ -119,15 +108,15 @@
         <view class="btn-group">
           <view class="option-btn {{heterogeneity === 0.85 ? 'active' : ''}}" 
                 bindtap="selectHeterogeneity" data-value="0.85">
-            没有好看的
+            侏罗纪公园模式
           </view>
           <view class="option-btn {{heterogeneity === 1.0 ? 'active' : ''}}" 
                 bindtap="selectHeterogeneity" data-value="1.0">
-            好看的不多不少
+            人间真实模式
           </view>
           <view class="option-btn {{heterogeneity === 1.15 ? 'active' : ''}}" 
                 bindtap="selectHeterogeneity" data-value="1.15">
-            很多好看的
+            天堂体验版
           </view>
         </view>
       </view>
@@ -137,36 +126,33 @@
         <view class="btn-group">
           <view class="option-btn {{teamwork === 0.85 ? 'active' : ''}}" 
                 bindtap="selectTeamwork" data-value="0.85">
-            脑残同事较多
+            甩锅侠集中营
           </view>
           <view class="option-btn {{teamwork === 1.0 ? 'active' : ''}}" 
                 bindtap="selectTeamwork" data-value="1.0">
-            都是普通同事
+            普通NPC队友
           </view>
           <view class="option-btn {{teamwork === 1.15 ? 'active' : ''}}" 
                 bindtap="selectTeamwork" data-value="1.15">
-            优秀同事较多
+            人均六边形战士
           </view>
         </view>
       </view>
 
       <view class="section">
-        <view class="section-title">领导傻X系数</view>
-        <view class="btn-group leadership-group">
-          <view class="option-btn leadership-btn {{leadershipFactor === 0.8 ? 'active' : ''}}" 
+        <view class="section-title">领导友好系数</view>
+        <view class="btn-group">
+          <view class="option-btn {{leadershipFactor === 0.8 ? 'active' : ''}}" 
                 bindtap="selectLeadershipFactor" data-value="0.8">
-            <text class="leadership-main">职场PUA大师</text>
-            <text class="leadership-sub">(增长CPU/KPI)</text>
+            狼性文化代言人
           </view>
-          <view class="option-btn leadership-btn {{leadershipFactor === 1.0 ? 'active' : ''}}" 
+          <view class="option-btn {{leadershipFactor === 1.0 ? 'active' : ''}}" 
                 bindtap="selectLeadershipFactor" data-value="1.0">
-            <text class="leadership-main">普通人类</text>
-            <text class="leadership-sub">(偶尔说人话)</text>
+            佛系放养型
           </view>
-          <view class="option-btn leadership-btn {{leadershipFactor === 1.2 ? 'active' : ''}}" 
+          <view class="option-btn {{leadershipFactor === 1.2 ? 'active' : ''}}" 
                 bindtap="selectLeadershipFactor" data-value="1.2">
-            <text class="leadership-main">神仙领导</text>
-            <text class="leadership-sub">(快买彩票)</text>
+            神仙下凡体验版
           </view>
         </view>
       </view>
@@ -206,19 +192,19 @@
         <view class="btn-group">
           <view class="option-btn {{companyProspect === 0.8 ? 'active' : ''}}" 
                 bindtap="selectCompanyProspect" data-value="0.8">
-            没希望
+            夕阳红产业
           </view>
           <view class="option-btn {{companyProspect === 1.0 ? 'active' : ''}}" 
                 bindtap="selectCompanyProspect" data-value="1.0">
-            一般
+            普通创业公司
           </view>
           <view class="option-btn {{companyProspect === 1.15 ? 'active' : ''}}" 
                 bindtap="selectCompanyProspect" data-value="1.15">
-            有前途
+            独角兽预备役
           </view>
           <view class="option-btn {{companyProspect === 1.3 ? 'active' : ''}}" 
                 bindtap="selectCompanyProspect" data-value="1.3">
-            非常好
+            宇宙厂分厂
           </view>
         </view>
       </view>

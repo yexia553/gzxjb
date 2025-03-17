@@ -10,7 +10,7 @@ Page({
     dailyHours: '8', // 日工作时长
     commuteTime: '1', // 通勤时长
     annualLeave: '10', // 年假天数
-    publicHolidays: '11', // 法定节假日
+    publicHolidays: 11, // 法定节假日
     
     // 环境系数
     workEnvironment: 1.0, // 工作环境系数
@@ -59,12 +59,6 @@ Page({
   onAnnualLeaveChange(e) {
     this.setData({
       annualLeave: e.detail
-    });
-  },
-  
-  onPublicHolidaysChange(e) {
-    this.setData({
-      publicHolidays: e.detail
     });
   },
   
@@ -158,11 +152,6 @@ Page({
       return false;
     }
     
-    if (this.data.publicHolidays === '' || parseFloat(this.data.publicHolidays) < 0) {
-      Toast('请输入有效的法定节假日天数');
-      return false;
-    }
-    
     return true;
   },
   
@@ -178,7 +167,7 @@ Page({
     const dailyHours = parseFloat(this.data.dailyHours);
     const commuteTime = parseFloat(this.data.commuteTime);
     const annualLeave = parseFloat(this.data.annualLeave);
-    const publicHolidays = parseFloat(this.data.publicHolidays);
+    const publicHolidays = this.data.publicHolidays; // 固定值11
     
     // 计算工作天数 (减去年假和法定节假日)
     const annualWorkingDays = Math.round((workingDays / 7) * 365) - annualLeave - publicHolidays;
