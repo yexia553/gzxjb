@@ -9,7 +9,9 @@
     <view class="card-body">
       <!-- 薪资与工作时间 section -->
       <view class="section">
-        <view class="section-title">基本信息</view>
+        <view class="section-title">
+          <text class="section-icon">💰</text>基本信息
+        </view>
         
         <van-cell-group>
           <!-- 年薪输入 -->
@@ -78,177 +80,234 @@
         </van-cell-group>
       </view>
 
-      <view class="divider"></view>
+      <view class="divider">
+        <view class="divider-text">工作环境评分</view>
+      </view>
 
       <!-- 环境系数 -->
       <view class="section">
-        <view class="section-title">工作环境</view>
+        <view class="section-title">
+          <text class="section-icon">🏢</text>工作环境
+        </view>
         <view class="btn-group">
           <view class="option-btn {{workEnvironment === 0.8 ? 'active' : ''}}" 
                 bindtap="selectWorkEnvironment" data-value="0.8">
-            偏远地区制造业工厂/建筑工地
+            <text class="option-icon">🏭</text>
+            <span class="option-text">偏远地区制造业工厂/建筑工地</span>
           </view>
           <view class="option-btn {{workEnvironment === 0.9 ? 'active' : ''}}" 
                 bindtap="selectWorkEnvironment" data-value="0.9">
-            郊区工厂/物流仓库/户外作业
+            <text class="option-icon">🚚</text>
+            <span class="option-text">郊区工厂/物流仓库/户外作业</span>
           </view>
           <view class="option-btn {{workEnvironment === 1.0 ? 'active' : ''}}" 
                 bindtap="selectWorkEnvironment" data-value="1.0">
-            普通市区写字楼/科技园区
+            <text class="option-icon">🏙️</text>
+            <span class="option-text">普通市区写字楼/科技园区</span>
           </view>
           <view class="option-btn {{workEnvironment === 1.1 ? 'active' : ''}}" 
                 bindtap="selectWorkEnvironment" data-value="1.1">
-            金融CBD/国企事业单位/外企
+            <text class="option-icon">💼</text>
+            <span class="option-text">金融CBD/国企事业单位/外企</span>
           </view>
         </view>
       </view>
 
       <view class="section">
-        <view class="section-title">异性环境</view>
+        <view class="section-title">
+          <text class="section-icon">👫</text>异性环境
+        </view>
         <view class="btn-group">
           <view class="option-btn {{heterogeneity === 0.85 ? 'active' : ''}}" 
                 bindtap="selectHeterogeneity" data-value="0.85">
-            侏罗纪公园模式
+            <text class="option-icon">🦖</text>
+            <span class="option-text">侏罗纪公园模式</span>
           </view>
           <view class="option-btn {{heterogeneity === 1.0 ? 'active' : ''}}" 
                 bindtap="selectHeterogeneity" data-value="1.0">
-            人间真实模式
+            <text class="option-icon">🌍</text>
+            <span class="option-text">人间真实模式</span>
           </view>
           <view class="option-btn {{heterogeneity === 1.15 ? 'active' : ''}}" 
                 bindtap="selectHeterogeneity" data-value="1.15">
-            天堂体验版
+            <text class="option-icon">😇</text>
+            <span class="option-text">天堂体验版</span>
           </view>
         </view>
       </view>
 
       <view class="section">
-        <view class="section-title">同事环境</view>
+        <view class="section-title">
+          <text class="section-icon">👥</text>同事环境
+        </view>
         <view class="btn-group">
           <view class="option-btn {{teamwork === 0.85 ? 'active' : ''}}" 
                 bindtap="selectTeamwork" data-value="0.85">
-            甩锅侠集中营
+            <text class="option-icon">🙄</text>
+            <span class="option-text">甩锅侠集中营</span>
           </view>
           <view class="option-btn {{teamwork === 1.0 ? 'active' : ''}}" 
                 bindtap="selectTeamwork" data-value="1.0">
-            普通NPC队友
+            <text class="option-icon">🤖</text>
+            <span class="option-text">普通NPC队友</span>
           </view>
           <view class="option-btn {{teamwork === 1.15 ? 'active' : ''}}" 
                 bindtap="selectTeamwork" data-value="1.15">
-            人均六边形战士
+            <text class="option-icon">🦸</text>
+            <span class="option-text">人均六边形战士</span>
           </view>
         </view>
       </view>
 
       <view class="section">
-        <view class="section-title">领导友好系数</view>
+        <view class="section-title">
+          <text class="section-icon">👑</text>领导友好系数
+        </view>
         <view class="btn-group">
           <view class="option-btn {{leadershipFactor === 0.8 ? 'active' : ''}}" 
                 bindtap="selectLeadershipFactor" data-value="0.8">
-            狼性文化代言人
+            <text class="option-icon">🐺</text>
+            <span class="option-text">狼性文化代言人</span>
           </view>
           <view class="option-btn {{leadershipFactor === 1.0 ? 'active' : ''}}" 
                 bindtap="selectLeadershipFactor" data-value="1.0">
-            佛系放养型
+            <text class="option-icon">🧘</text>
+            <span class="option-text">佛系放养型</span>
           </view>
           <view class="option-btn {{leadershipFactor === 1.2 ? 'active' : ''}}" 
                 bindtap="selectLeadershipFactor" data-value="1.2">
-            神仙下凡体验版
+            <text class="option-icon">🧚</text>
+            <span class="option-text">神仙下凡体验版</span>
           </view>
         </view>
       </view>
 
+      <view class="divider">
+        <view class="divider-text">个人与公司</view>
+      </view>
+
       <view class="section">
-        <view class="section-title">个人学历</view>
+        <view class="section-title">
+          <text class="section-icon">🎓</text>个人学历
+        </view>
         <view class="btn-group">
           <view class="option-btn {{education === 0.8 ? 'active' : ''}}" 
                 bindtap="selectEducation" data-value="0.8">
-            专科及以下
+            <text class="option-icon">📝</text>
+            <span class="option-text">专科及以下</span>
           </view>
           <view class="option-btn {{education === 1.0 ? 'active' : ''}}" 
                 bindtap="selectEducation" data-value="1.0">
-            普通本科
+            <text class="option-icon">📚</text>
+            <span class="option-text">普通本科</span>
           </view>
           <view class="option-btn {{education === 1.1 ? 'active' : ''}}" 
                 bindtap="selectEducation" data-value="1.1">
-            985/211/海龟本科
+            <text class="option-icon">🏛️</text>
+            <span class="option-text">985/211/海龟本科</span>
           </view>
           <view class="option-btn {{education === 1.2 ? 'active' : ''}}" 
                 bindtap="selectEducation" data-value="1.2">
-            普通硕士
+            <text class="option-icon">🔬</text>
+            <span class="option-text">普通硕士</span>
           </view>
           <view class="option-btn {{education === 1.3 ? 'active' : ''}}" 
                 bindtap="selectEducation" data-value="1.3">
-            985/211/海龟硕士
+            <text class="option-icon">🧪</text>
+            <span class="option-text">985/211/海龟硕士</span>
           </view>
           <view class="option-btn {{education === 1.6 ? 'active' : ''}}" 
                 bindtap="selectEducation" data-value="1.6">
-            985/211/海龟博士
+            <text class="option-icon">🔭</text>
+            <span class="option-text">985/211/海龟博士</span>
           </view>
         </view>
       </view>
 
       <view class="section">
-        <view class="section-title">公司前景</view>
+        <view class="section-title">
+          <text class="section-icon">🚀</text>公司前景
+        </view>
         <view class="btn-group">
           <view class="option-btn {{companyProspect === 0.8 ? 'active' : ''}}" 
                 bindtap="selectCompanyProspect" data-value="0.8">
-            夕阳红产业
+            <text class="option-icon">🌇</text>
+            <span class="option-text">夕阳红产业</span>
           </view>
           <view class="option-btn {{companyProspect === 1.0 ? 'active' : ''}}" 
                 bindtap="selectCompanyProspect" data-value="1.0">
-            普通创业公司
+            <text class="option-icon">🌱</text>
+            <span class="option-text">普通创业公司</span>
           </view>
           <view class="option-btn {{companyProspect === 1.15 ? 'active' : ''}}" 
                 bindtap="selectCompanyProspect" data-value="1.15">
-            独角兽预备役
+            <text class="option-icon">🦄</text>
+            <span class="option-text">独角兽预备役</span>
           </view>
           <view class="option-btn {{companyProspect === 1.3 ? 'active' : ''}}" 
                 bindtap="selectCompanyProspect" data-value="1.3">
-            宇宙厂分厂
+            <text class="option-icon">🌌</text>
+            <span class="option-text">宇宙厂分厂</span>
           </view>
         </view>
       </view>
       
       <view class="section">
-        <view class="section-title">摸鱼程度</view>
+        <view class="section-title">
+          <text class="section-icon">🐠</text>摸鱼程度
+        </view>
         <view class="btn-group">
           <view class="option-btn {{fishLevel === 0.8 ? 'active' : ''}}" 
                 bindtap="selectFishLevel" data-value="0.8">
-            摸不了鱼
+            <text class="option-icon">⛔</text>
+            <span class="option-text">摸不了鱼</span>
           </view>
           <view class="option-btn {{fishLevel === 1.0 ? 'active' : ''}}" 
                 bindtap="selectFishLevel" data-value="1.0">
-            偶尔能摸
+            <text class="option-icon">🎣</text>
+            <span class="option-text">偶尔能摸</span>
           </view>
           <view class="option-btn {{fishLevel === 1.2 ? 'active' : ''}}" 
                 bindtap="selectFishLevel" data-value="1.2">
-            想摸就摸
+            <text class="option-icon">🏄</text>
+            <span class="option-text">想摸就摸</span>
           </view>
         </view>
       </view>
       
       <view class="section">
-        <view class="section-title">五险一金</view>
+        <view class="section-title">
+          <text class="section-icon">🏥</text>五险一金
+        </view>
         <view class="btn-group">
           <view class="option-btn {{insuranceFactor === 0.8 ? 'active' : ''}}" 
                 bindtap="selectInsuranceFactor" data-value="0.8">
-            裸奔模式（啥都没有）
+            <text class="option-icon">🏃</text>
+            <span class="option-text">裸奔模式（啥都没有）</span>
           </view>
           <view class="option-btn {{insuranceFactor === 1.0 ? 'active' : ''}}" 
                 bindtap="selectInsuranceFactor" data-value="1.0">
-            标准套餐（勉强交点）
+            <text class="option-icon">📊</text>
+            <span class="option-text">标准套餐（勉强交点）</span>
           </view>
           <view class="option-btn {{insuranceFactor === 1.2 ? 'active' : ''}}" 
                 bindtap="selectInsuranceFactor" data-value="1.2">
-            豪华全配（疯狂交钱）
+            <text class="option-icon">💎</text>
+            <span class="option-text">豪华全配（疯狂交钱）</span>
           </view>
         </view>
       </view>
       
       <view class="mt-40">
-        <button class="primary-btn" bindtap="calculate">计算性价比</button>
+        <button class="primary-btn" bindtap="calculate">
+          <text class="btn-icon">🧮</text>
+          <text class="button-text">计算性价比</text>
+        </button>
       </view>
     </view>
+  </view>
+  <view class="footer">
+    <text>量化你的职场决策 · 明智选择，快乐工作</text>
   </view>
 </view>
 
