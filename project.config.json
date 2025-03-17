@@ -1,5 +1,5 @@
 {
-  "description": "这破班上的值不值小程序",
+  "description": "这P班上的值不值小程序",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -47,7 +47,7 @@
   "compileType": "miniprogram",
   "libVersion": "2.25.3",
   "appid": "wx509e89efed31596a",
-  "projectname": "这破班上的值不值",
+  "projectname": "这P班上的值不值",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",

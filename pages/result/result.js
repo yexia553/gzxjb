@@ -190,7 +190,7 @@ Page({
     ctx.setFillStyle('#333333');
     ctx.setFontSize(18);
     ctx.setTextAlign('center');
-    ctx.fillText('这破班上的值不值?', canvasWidth / 2, 40);
+    ctx.fillText('这P班上的值不值?', canvasWidth / 2, 40);
     
     // 绘制评估结果
     ctx.setFillStyle(this.data.assessment.color);
@@ -260,7 +260,7 @@ Page({
     // 绘制小程序名称
     ctx.setFillStyle('#999999');
     ctx.setFontSize(12);
-    ctx.fillText('这破班上的值不值', canvasWidth / 2, 380);
+    ctx.fillText('这P班上的值不值', canvasWidth / 2, 380);
     
     // 生成图片
     ctx.draw(false, () => {

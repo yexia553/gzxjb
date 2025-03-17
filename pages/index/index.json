@@ -7,5 +7,5 @@
     "van-popup": "@vant/weapp/popup/index",
     "van-toast": "@vant/weapp/toast/index"
   },
-  "navigationBarTitleText": "这破班上的值不值"
+  "navigationBarTitleText": "这P班上的值不值"
 }

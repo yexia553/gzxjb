@@ -2,7 +2,7 @@
 <van-toast id="van-toast" />
 <view class="container">
   <view class="header fadeIn">
-    <view class="title">这破班上的值不值 ?</view>
+    <view class="title">这P班上的值不值 ?</view>
   </view>
 
   <view class="card fadeIn">
@@ -41,7 +41,7 @@
             value="{{ dailyHours }}"
             label="日工作时长/h"
             type="digit"
-            placeholder="请输入每天工作小时数"
+            placeholder="请输入每天搬砖小时数"
             bind:change="onDailyHoursChange"
             left-icon="clock-o"
             required

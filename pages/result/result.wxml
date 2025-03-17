@@ -1,7 +1,7 @@
 <!--result.wxml-->
 <view class="container">
   <view class="page-title fadeIn">
-    <text>这破班上的值不值？</text>
+    <text>这P班上的值不值？</text>
   </view>
   
   <!-- 结果卡片 -->
@@ -79,7 +79,7 @@
           </view>
           <block wx:if="{{travelDaysNeeded < 30}}">
             <view class="funMetrics-value">{{travelDaysNeeded}}</view>
-            <view class="funMetrics-label">天工作可换一次旅行</view>
+            <view class="funMetrics-label">天搬砖可换一次旅行</view>
           </block>
           <block wx:else>
             <view class="funMetrics-value">{{travelMonthsNeeded}}</view>

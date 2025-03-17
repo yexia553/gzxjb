@@ -9,7 +9,7 @@
 }
 
 .result-card {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 24rpx;
   padding: 36rpx;
   margin-bottom: 32rpx;
@@ -80,7 +80,7 @@
   text-align: center;
   padding: 20rpx 10rpx;
   border-radius: 16rpx;
-  background-color: #F9FAFC;
+  background-color: #f9fafc;
   box-shadow: var(--shadow-sm);
 }
 
@@ -150,7 +150,7 @@
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
-  background-color: #F5F7FA;
+  background-color: #f5f7fa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,7 +188,7 @@
 
 /* 旅行指标特殊样式 */
 .travel-item .funMetrics-value {
-  color: #FF7043;
+  color: #ff7043;
   font-weight: bold;
 }
 
@@ -215,9 +215,11 @@
   flex: 0 0 auto;
   width: 240rpx;
   height: 70rpx;
-  line-height: 70rpx;
   font-size: 26rpx;
   border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .primary-btn {
@@ -232,6 +234,7 @@
 
 .share-btn-text {
   margin-left: 8rpx;
+  line-height: normal;
 }
 
 .share-tips {
@@ -260,7 +263,7 @@
 
 /* 修改紧凑型隐私保护样式 */
 .privacy-compact-card {
-  background: #F8F9FB;
+  background: #f8f9fb;
   border-radius: 16rpx;
   padding: 16rpx 24rpx;
   margin: -10rpx 24rpx 100rpx;
