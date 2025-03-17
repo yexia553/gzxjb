@@ -39,10 +39,13 @@ Page({
     }
   },
   
-  onLoad: function() {
+  onLoad: function(options) {
     // 从全局数据中获取计算结果
     const app = getApp();
     const results = app.globalData.calculationResults;
+    
+    // 检查是否从分享链接打开
+    const isFromShare = options && options.fromShare === 'true';
     
     if (results) {
       this.setData({
@@ -65,7 +68,16 @@ Page({
       });
       
       // 计算新增的快乐指数
-      this.calculateAdditionalFunMetrics(results.dailySalary);
+      if (results.dailySalary) {
+        this.calculateAdditionalFunMetrics(results.dailySalary);
+      }
+      
+      // 如果是从分享链接打开，应用分享时的隐私设置
+      if (isFromShare && app.globalData.privacySettings) {
+        this.setData({
+          privacySettings: app.globalData.privacySettings
+        });
+      }
     } else {
       // 如果没有结果数据，返回到计算页
       wx.navigateBack();
@@ -164,10 +176,19 @@ Page({
     // 根据隐私设置创建分享标题
     let shareTitle = `我的工作性价比是${this.data.valueScore}分，${this.data.assessment.text}`;
     
-    // 创建分享卡片
+    // 如果用户隐藏了日薪或快乐指数，在标题中增加隐私提示
+    if (!this.data.privacySettings.showSalary || !this.data.privacySettings.showFunMetrics) {
+      shareTitle += '（隐私保护模式）';
+    }
+    
+    // 创建分享参数，包括隐私设置
+    const showSalary = this.data.privacySettings.showSalary ? 1 : 0;
+    const showFunMetrics = this.data.privacySettings.showFunMetrics ? 1 : 0;
+    
+    // 创建分享卡片，传递隐私设置参数
     return {
       title: shareTitle,
-      path: '/pages/index/index',
+      path: `/pages/index/index?fromShare=true&valueScore=${this.data.valueScore}&assessment=${encodeURIComponent(this.data.assessment.text)}&showSalary=${showSalary}&showFunMetrics=${showFunMetrics}`,
       imageUrl: this.createShareImage()
     }
   },
@@ -229,9 +250,11 @@ Page({
     ctx.fillText('每日快乐指数：', canvasWidth / 2, 250);
     
     // 根据隐私设置绘制趣味指标图标和数值
+    ctx.setFontSize(16);
+    ctx.setFillStyle('#0077e6');
+    
+    // 无论隐私设置如何，都绘制标签，只有值会根据隐私设置变化
     if (privacySettings.showFunMetrics) {
-      ctx.setFontSize(16);
-      ctx.setFillStyle('#0077e6');
       ctx.fillText(`${this.data.milkTeaCount}杯奶茶`, canvasWidth / 2, 280);
       ctx.fillText(`${this.data.movieCount}场《哪吒2》`, canvasWidth / 2, 310);
       ctx.fillText(`${this.data.restaurantMealCount}顿大餐`, canvasWidth / 2, 340);
@@ -245,9 +268,13 @@ Page({
         ctx.fillText(`工作${this.data.travelMonthsNeeded}个月可换一次旅行`, canvasWidth / 2, 430);
       }
     } else {
-      ctx.setFontSize(16);
-      ctx.setFillStyle('#0077e6');
-      ctx.fillText(`已隐藏`, canvasWidth / 2, 300);
+      // 显示已隐藏而不是完全隐藏
+      ctx.fillText("已隐藏 杯奶茶", canvasWidth / 2, 280);
+      ctx.fillText("已隐藏 场《哪吒2》", canvasWidth / 2, 310);
+      ctx.fillText("已隐藏 顿大餐", canvasWidth / 2, 340);
+      ctx.fillText("已隐藏 节私教课", canvasWidth / 2, 370);
+      ctx.fillText("已隐藏 张演唱会门票", canvasWidth / 2, 400);
+      ctx.fillText("工作已隐藏天/月可换一次旅行", canvasWidth / 2, 430);
     }
     
     // 如果隐藏了隐私信息，添加隐私保护标记

@@ -27,8 +27,57 @@ Page({
     tipContent: ''
   },
   
-  onLoad() {
-    // 页面加载时执行
+  onLoad(options) {
+    // 检查是否是从分享链接打开的
+    if (options && options.fromShare) {
+      // 处理分享参数
+      const valueScore = options.valueScore || '';
+      const assessment = decodeURIComponent(options.assessment || '');
+      const showSalary = options.showSalary === '1';
+      const showFunMetrics = options.showFunMetrics === '1';
+      
+      // 如果是分享来的，直接跳转到结果页
+      if (valueScore && assessment) {
+        // 创建临时结果对象
+        const app = getApp();
+        
+        // 使用全局数据存储结果和隐私设置
+        app.globalData.calculationResults = {
+          valueScore: valueScore,
+          assessment: {
+            text: assessment,
+            color: this.getAssessmentColor(assessment)
+          }
+        };
+        
+        // 设置隐私设置
+        app.globalData.privacySettings = {
+          showSalary: showSalary,
+          showFunMetrics: showFunMetrics
+        };
+        
+        // 跳转到结果页
+        wx.navigateTo({
+          url: '/pages/result/result?fromShare=true'
+        });
+      }
+    }
+  },
+  
+  // 根据评估文本获取对应的颜色
+  getAssessmentColor(assessmentText) {
+    switch(assessmentText) {
+      case '值，贼值！':
+        return '#07c160';
+      case '还可以':
+        return '#1989fa';
+      case '不值当':
+        return '#ff976a';
+      case '血亏':
+        return '#ee0a24';
+      default:
+        return '#1989fa';
+    }
   },
   
   // 输入框变更处理函数

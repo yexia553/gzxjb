@@ -21,7 +21,7 @@
   --shadow-md: 0 4rpx 12rpx rgba(50, 50, 93, 0.15);
   --shadow-lg: 0 12rpx 32rpx rgba(50, 50, 93, 0.2);
   --card-border-radius: 24rpx;
-  --btn-border-radius: 16rpx;
+  --btn-border-radius: 24rpx;
 }
 
 page {
@@ -143,7 +143,7 @@ page {
   color: var(--gray-700);
   font-size: 26rpx;
   padding: 20rpx 16rpx;
-  border-radius: var(--btn-border-radius);
+  border-radius: 12px;
   text-align: center;
   font-weight: 500;
   box-shadow: var(--shadow-sm);
@@ -191,6 +191,7 @@ page {
   box-shadow: var(--shadow-md);
   position: relative;
   z-index: 1;
+  border-radius: 12px;
 }
 
 .option-btn.active .option-text,
@@ -234,7 +235,7 @@ page {
   color: #ffffff;
   font-size: 32rpx;
   padding: 24rpx 0;
-  border-radius: var(--btn-border-radius);
+  border-radius: 12px;
   text-align: center;
   width: 100%;
   font-weight: 600;
@@ -298,7 +299,7 @@ page {
   color: white;
   font-size: 28rpx;
   padding: 16rpx 48rpx;
-  border-radius: var(--btn-border-radius);
+  border-radius: 12px;
   box-shadow: var(--shadow-sm);
 }
 

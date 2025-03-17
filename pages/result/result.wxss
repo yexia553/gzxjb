@@ -323,3 +323,21 @@
   padding-bottom: 6rpx;
   font-size: 24rpx;
 }
+
+.privacy-mask {
+  color: #f56c6c;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.privacy-mask-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200rpx;
+  text-align: center;
+  background: rgba(245, 108, 108, 0.1);
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin: 16rpx;
+}

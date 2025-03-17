@@ -20,7 +20,8 @@
       
       <view class="result-item">
         <view class="result-label">日薪（元）</view>
-        <view class="result-value">{{dailySalary}}</view>
+        <view class="result-value" wx:if="{{privacySettings.showSalary}}">{{dailySalary}}</view>
+        <view class="result-value privacy-mask" wx:else>已隐藏</view>
       </view>
     </view>
     
@@ -37,7 +38,8 @@
           <view class="funMetrics-icon-container">
             <image class="funMetrics-icon" src="/assets/milk_tea.svg" mode="aspectFit"></image>
           </view>
-          <view class="funMetrics-value">{{milkTeaCount}}</view>
+          <view class="funMetrics-value" wx:if="{{privacySettings.showFunMetrics}}">{{milkTeaCount}}</view>
+          <view class="funMetrics-value privacy-mask" wx:else>已隐藏</view>
           <view class="funMetrics-label">杯奶茶</view>
         </view>
         
@@ -45,7 +47,8 @@
           <view class="funMetrics-icon-container">
             <image class="funMetrics-icon" src="/assets/movie.svg" mode="aspectFit"></image>
           </view>
-          <view class="funMetrics-value">{{movieCount}}</view>
+          <view class="funMetrics-value" wx:if="{{privacySettings.showFunMetrics}}">{{movieCount}}</view>
+          <view class="funMetrics-value privacy-mask" wx:else>已隐藏</view>
           <view class="funMetrics-label">场《哪吒2》</view>
         </view>
         
@@ -53,7 +56,8 @@
           <view class="funMetrics-icon-container">
             <image class="funMetrics-icon" src="/assets/meal.svg" mode="aspectFit"></image>
           </view>
-          <view class="funMetrics-value">{{restaurantMealCount}}</view>
+          <view class="funMetrics-value" wx:if="{{privacySettings.showFunMetrics}}">{{restaurantMealCount}}</view>
+          <view class="funMetrics-value privacy-mask" wx:else>已隐藏</view>
           <view class="funMetrics-label">顿大餐</view>
         </view>
         
@@ -61,7 +65,8 @@
           <view class="funMetrics-icon-container">
             <image class="funMetrics-icon" src="/assets/fitness_coach.svg" mode="aspectFit"></image>
           </view>
-          <view class="funMetrics-value">{{personalTrainingCount}}</view>
+          <view class="funMetrics-value" wx:if="{{privacySettings.showFunMetrics}}">{{personalTrainingCount}}</view>
+          <view class="funMetrics-value privacy-mask" wx:else>已隐藏</view>
           <view class="funMetrics-label">节私教课</view>
         </view>
         
@@ -69,7 +74,8 @@
           <view class="funMetrics-icon-container">
             <image class="funMetrics-icon" src="/assets/concert.svg" mode="aspectFit"></image>
           </view>
-          <view class="funMetrics-value">{{concertTickets}}</view>
+          <view class="funMetrics-value" wx:if="{{privacySettings.showFunMetrics}}">{{concertTickets}}</view>
+          <view class="funMetrics-value privacy-mask" wx:else>已隐藏</view>
           <view class="funMetrics-label">张演唱会门票</view>
         </view>
         
@@ -78,11 +84,13 @@
             <image class="funMetrics-icon" src="/assets/travel.svg" mode="aspectFit"></image>
           </view>
           <block wx:if="{{travelDaysNeeded < 30}}">
-            <view class="funMetrics-value">{{travelDaysNeeded}}</view>
+            <view class="funMetrics-value" wx:if="{{privacySettings.showFunMetrics}}">{{travelDaysNeeded}}</view>
+            <view class="funMetrics-value privacy-mask" wx:else>已隐藏</view>
             <view class="funMetrics-label">天搬砖可换一次旅行</view>
           </block>
           <block wx:else>
-            <view class="funMetrics-value">{{travelMonthsNeeded}}</view>
+            <view class="funMetrics-value" wx:if="{{privacySettings.showFunMetrics}}">{{travelMonthsNeeded}}</view>
+            <view class="funMetrics-value privacy-mask" wx:else>已隐藏</view>
             <view class="funMetrics-label">个月工资可换一次旅行</view>
           </block>
         </view>
