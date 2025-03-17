@@ -55,7 +55,37 @@
           </view>
           <view class="funMetrics-value">{{restaurantMealCount}}</view>
           <view class="funMetrics-label">顿大餐</view>
-        </view> 
+        </view>
+        
+        <view class="funMetrics-item">
+          <view class="funMetrics-icon-container">
+            <image class="funMetrics-icon" src="/assets/fitness_coach.svg" mode="aspectFit"></image>
+          </view>
+          <view class="funMetrics-value">{{personalTrainingCount}}</view>
+          <view class="funMetrics-label">节私教课</view>
+        </view>
+        
+        <view class="funMetrics-item">
+          <view class="funMetrics-icon-container">
+            <image class="funMetrics-icon" src="/assets/concert.svg" mode="aspectFit"></image>
+          </view>
+          <view class="funMetrics-value">{{concertTickets}}</view>
+          <view class="funMetrics-label">张演唱会门票</view>
+        </view>
+        
+        <view class="funMetrics-item travel-item">
+          <view class="funMetrics-icon-container">
+            <image class="funMetrics-icon" src="/assets/travel.svg" mode="aspectFit"></image>
+          </view>
+          <block wx:if="{{travelDaysNeeded < 30}}">
+            <view class="funMetrics-value">{{travelDaysNeeded}}</view>
+            <view class="funMetrics-label">天工作可换一次旅行</view>
+          </block>
+          <block wx:else>
+            <view class="funMetrics-value">{{travelMonthsNeeded}}</view>
+            <view class="funMetrics-label">个月工资可换一次旅行</view>
+          </block>
+        </view>
       </view>
       
       <view class="funMetrics-desc compact-desc">

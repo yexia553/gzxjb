@@ -23,6 +23,10 @@ Page({
     milkTeaCount: 0,
     movieCount: 0,
     restaurantMealCount: 0,
+    personalTrainingCount: 0,
+    concertTickets: 0,
+    travelDaysNeeded: 0,
+    travelMonthsNeeded: 0,
     
     // 分享相关
     showShareTips: false,
@@ -59,10 +63,43 @@ Page({
         movieCount: results.movieCount,
         restaurantMealCount: results.restaurantMealCount
       });
+      
+      // 计算新增的快乐指数
+      this.calculateAdditionalFunMetrics(results.dailySalary);
     } else {
       // 如果没有结果数据，返回到计算页
       wx.navigateBack();
     }
+  },
+  
+  /**
+   * 计算额外的快乐指数项目
+   */
+  calculateAdditionalFunMetrics: function(dailySalary) {
+    // 价格定义
+    const PERSONAL_TRAINING_PRICE = 200;
+    const CONCERT_TICKET_PRICE = 800;
+    const TRAVEL_PRICE = 6000;
+    
+    // 计算每日收入可以兑换的数量（保留一位小数）
+    const personalTrainingCount = (dailySalary / PERSONAL_TRAINING_PRICE).toFixed(1);
+    const concertTickets = (dailySalary / CONCERT_TICKET_PRICE).toFixed(1);
+    
+    // 计算旅行所需天数（保留一位小数）
+    const travelDaysNeeded = (TRAVEL_PRICE / dailySalary).toFixed(1);
+    let travelMonthsNeeded = 0;
+    
+    if (parseFloat(travelDaysNeeded) >= 30) {
+      // 如果需要超过30天，转换为月份显示（按每月22个工作日计算）
+      travelMonthsNeeded = (parseFloat(travelDaysNeeded) / 22).toFixed(1);
+    }
+    
+    this.setData({
+      personalTrainingCount,
+      concertTickets,
+      travelDaysNeeded,
+      travelMonthsNeeded
+    });
   },
   
   /**
@@ -189,7 +226,7 @@ Page({
     ctx.setFillStyle('#333333');
     ctx.setFontSize(16);
     ctx.setTextAlign('center');
-    ctx.fillText('一天薪资可以买:', canvasWidth / 2, 250);
+    ctx.fillText('每日快乐指数：', canvasWidth / 2, 250);
     
     // 根据隐私设置绘制趣味指标图标和数值
     if (privacySettings.showFunMetrics) {
@@ -198,6 +235,15 @@ Page({
       ctx.fillText(`${this.data.milkTeaCount}杯奶茶`, canvasWidth / 2, 280);
       ctx.fillText(`${this.data.movieCount}场《哪吒2》`, canvasWidth / 2, 310);
       ctx.fillText(`${this.data.restaurantMealCount}顿大餐`, canvasWidth / 2, 340);
+      ctx.fillText(`${this.data.personalTrainingCount}节私教课`, canvasWidth / 2, 370);
+      ctx.fillText(`${this.data.concertTickets}张演唱会门票`, canvasWidth / 2, 400);
+      
+      // 根据情况展示旅行相关信息
+      if (parseFloat(this.data.travelDaysNeeded) < 30) {
+        ctx.fillText(`工作${this.data.travelDaysNeeded}天可换一次旅行`, canvasWidth / 2, 430);
+      } else if (this.data.travelMonthsNeeded > 0) {
+        ctx.fillText(`工作${this.data.travelMonthsNeeded}个月可换一次旅行`, canvasWidth / 2, 430);
+      }
     } else {
       ctx.setFontSize(16);
       ctx.setFillStyle('#0077e6');
