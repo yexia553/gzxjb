@@ -50,3 +50,21 @@ mini_program/
 - 微信小程序原生框架
 - Vant Weapp UI 组件库
 - Canvas 绘图 API（用于生成分享图片）
+
+## 关于
+
+如果觉得好玩，给我的 repo 点个 star 或者能关注我的微信公众号：**潘智祥** 就更好啦，公众号主要记录我对于 AI(LLM)的一些看法，也会推荐一些好用的工具。
+
+![潘智祥](./images/wechat_qr_code.png)
+
+我工作之余会做一些产品，也会通过公众号发出来。
+
+不想关注公众号，闲来无事看看我的博客也行呀 [https://panzhixiang.cn](https://panzhixiang.cn)
+
+## License
+
+本项目采用 [CC BY-NC-SA 4.0](LICENSE) 协议，请遵守以下条款：
+- 允许自由使用、修改和共享
+- **禁止商业用途**
+- 必须保留原始署名
+- 衍生作品需采用相同协议

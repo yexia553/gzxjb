@@ -41,13 +41,31 @@ Page({
         // 创建临时结果对象
         const app = getApp();
         
+        // 解析共享出来的数据
+        const dailySalary = decodeURIComponent(options.dailySalary || '');
+        const milkTeaCount = decodeURIComponent(options.milkTeaCount || '0');
+        const movieCount = decodeURIComponent(options.movieCount || '0');
+        const restaurantMealCount = decodeURIComponent(options.restaurantMealCount || '0');
+        const personalTrainingCount = decodeURIComponent(options.personalTrainingCount || '0');
+        const concertTickets = decodeURIComponent(options.concertTickets || '0');
+        const travelDaysNeeded = decodeURIComponent(options.travelDaysNeeded || '0');
+        const travelMonthsNeeded = decodeURIComponent(options.travelMonthsNeeded || '0');
+        
         // 使用全局数据存储结果和隐私设置
         app.globalData.calculationResults = {
           valueScore: valueScore,
           assessment: {
             text: assessment,
             color: this.getAssessmentColor(assessment)
-          }
+          },
+          dailySalary: dailySalary,
+          milkTeaCount: milkTeaCount,
+          movieCount: movieCount,
+          restaurantMealCount: restaurantMealCount,
+          personalTrainingCount: personalTrainingCount,
+          concertTickets: concertTickets,
+          travelDaysNeeded: travelDaysNeeded,
+          travelMonthsNeeded: travelMonthsNeeded
         };
         
         // 设置隐私设置
@@ -67,6 +85,17 @@ Page({
   // 根据评估文本获取对应的颜色
   getAssessmentColor(assessmentText) {
     switch(assessmentText) {
+      case '不值！别上了！':
+        return '#7f1d1d';
+      case '一般，随便干干':
+        return '#ef4444';
+      case '凑合，可以考虑':
+        return '#f59e0b';
+      case '不错，还挺合适你':
+        return '#3b82f6';
+      case '值！这班值啊！':
+        return '#10b981';
+      // 保留原有的匹配（兼容性）
       case '值，贼值！':
         return '#07c160';
       case '还可以':

@@ -62,13 +62,20 @@ Page({
         workingDaysFactor: results.workingDaysFactor,
         annualLeave: results.annualLeave,
         publicHolidays: results.publicHolidays,
-        milkTeaCount: results.milkTeaCount,
-        movieCount: results.movieCount,
-        restaurantMealCount: results.restaurantMealCount
+        milkTeaCount: results.milkTeaCount || 0,
+        movieCount: results.movieCount || 0,
+        restaurantMealCount: results.restaurantMealCount || 0,
+        personalTrainingCount: results.personalTrainingCount || 0,
+        concertTickets: results.concertTickets || 0,
+        travelDaysNeeded: results.travelDaysNeeded || 0,
+        travelMonthsNeeded: results.travelMonthsNeeded || 0
       });
       
-      // 计算新增的快乐指数
-      if (results.dailySalary) {
+      // 从分享链接打开时，如果直接包含了额外的快乐指数数据，不需要计算
+      // 只有当没有传递这些数据并且有dailySalary时才需要计算
+      if (!isFromShare || 
+          (!results.personalTrainingCount && !results.concertTickets && 
+           !results.travelDaysNeeded && results.dailySalary)) {
         this.calculateAdditionalFunMetrics(results.dailySalary);
       }
       
@@ -185,10 +192,34 @@ Page({
     const showSalary = this.data.privacySettings.showSalary ? 1 : 0;
     const showFunMetrics = this.data.privacySettings.showFunMetrics ? 1 : 0;
     
-    // 创建分享卡片，传递隐私设置参数
+    // 准备所有需要分享的数据
+    const shareData = {
+      valueScore: this.data.valueScore,
+      assessment: this.data.assessment.text, 
+      showSalary: showSalary,
+      showFunMetrics: showFunMetrics,
+      dailySalary: this.data.dailySalary,
+      milkTeaCount: this.data.milkTeaCount,
+      movieCount: this.data.movieCount,
+      restaurantMealCount: this.data.restaurantMealCount,
+      personalTrainingCount: this.data.personalTrainingCount,
+      concertTickets: this.data.concertTickets,
+      travelDaysNeeded: this.data.travelDaysNeeded,
+      travelMonthsNeeded: this.data.travelMonthsNeeded
+    };
+    
+    // 构建分享链接
+    let path = `/pages/index/index?fromShare=true`;
+    for (const [key, value] of Object.entries(shareData)) {
+      if (value !== undefined && value !== null) {
+        path += `&${key}=${encodeURIComponent(value)}`;
+      }
+    }
+    
+    // 创建分享卡片
     return {
       title: shareTitle,
-      path: `/pages/index/index?fromShare=true&valueScore=${this.data.valueScore}&assessment=${encodeURIComponent(this.data.assessment.text)}&showSalary=${showSalary}&showFunMetrics=${showFunMetrics}`,
+      path: path,
       imageUrl: this.createShareImage()
     }
   },
